@@ -1,0 +1,22 @@
+{
+  "name": "defizap-api",
+  "version": "1.0.0",
+  "description": "API for DeFiZap",
+  "main": "app.js",
+  "scripts": {
+    "start": "node ./server.js"
+  },
+  "author": "@cryptonomik",
+  "license": "GPLv2",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "bottleneck": "^2.19.5",
+    "cors": "^2.8.5",
+    "cron": "^1.7.2",
+    "ethers": "^4.0.41",
+    "express": "^4.17.1"
+  },
+  "engines": {
+    "node": "12.x"
+  }
+}
