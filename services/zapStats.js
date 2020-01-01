@@ -34,7 +34,6 @@ const computeZapStats = async () => {
         let volume = totalGas = gasPrice = numTransactions = 0
         let history = await limiter.schedule(() => etherScan.getHistory(address))
         console.log(new Date().toLocaleString(), 'updating', zap)
-        console.log(history)
         history.forEach(transaction => {
             volume += +ethers.utils.formatEther(transaction.value)
             gasPrice += +transaction.gasPrice.toString() / gwei
