@@ -34,12 +34,13 @@ const computeZapStats = async () => {
         let volume = totalGas = gasPrice = numTransactions = 0
         let history = await limiter.schedule(() => etherScan.getHistory(address))
         console.log(new Date().toLocaleString(), 'updating', zap)
-
+        console.log(history)
         history.forEach(transaction => {
             volume += +ethers.utils.formatEther(transaction.value)
             gasPrice += +transaction.gasPrice.toString() / gwei
             numTransactions++
         })
+        numTransactions -= 2 //Stats do not count transactions that deploy and transfer ownership
         zaps.push({
             name: zap,
             address: addresses[zap],
@@ -61,28 +62,42 @@ const computeZapStats = async () => {
             zaps[i].avgVolumeETH = zaps[i].volumeETH / zaps[i].numTransactions
             zaps[i].avgVolumeUSD = zaps[i].volumeUSD / zaps[i].numTransactions
         }
-        if (zaps[i].name === 'ETH Bull') {
+        else if (zaps[i].name === 'ETH Bull') {
             zaps[i].numTransactions += zaps[i + 1].numTransactions
             zaps[i].volumeETH += zaps[i + 1].volumeETH
             zaps[i].volumeUSD += zaps[i + 1].volumeUSD
             zaps[i].avgVolumeETH = zaps[i].volumeETH / zaps[i].numTransactions
             zaps[i].avgVolumeUSD = zaps[i].volumeUSD / zaps[i].numTransactions
         }
-        if (zaps[i].name === 'Moderate Bull') {
+        else if (zaps[i].name === 'Moderate Bull') {
             zaps[i].numTransactions += zaps[i + 1].numTransactions
             zaps[i].volumeETH += zaps[i + 1].volumeETH
             zaps[i].volumeUSD += zaps[i + 1].volumeUSD
             zaps[i].avgVolumeETH = zaps[i].volumeETH / zaps[i].numTransactions
             zaps[i].avgVolumeUSD = zaps[i].volumeUSD / zaps[i].numTransactions
         }
-        if (zaps[i].name === 'Double Bull') {
+        else if (zaps[i].name === 'Double Bull') {
             zaps[i].numTransactions += zaps[i + 1].numTransactions
             zaps[i].volumeETH += zaps[i + 1].volumeETH
             zaps[i].volumeUSD += zaps[i + 1].volumeUSD
             zaps[i].avgVolumeETH = zaps[i].volumeETH / zaps[i].numTransactions
             zaps[i].avgVolumeUSD = zaps[i].volumeUSD / zaps[i].numTransactions
         }
-        if (zaps[i].name === 'Super Saver') {
+        else if (zaps[i].name === 'Super Saver') {
+            zaps[i].numTransactions += zaps[i + 1].numTransactions
+            zaps[i].volumeETH += zaps[i + 1].volumeETH
+            zaps[i].volumeUSD += zaps[i + 1].volumeUSD
+            zaps[i].avgVolumeETH = zaps[i].volumeETH / zaps[i].numTransactions
+            zaps[i].avgVolumeUSD = zaps[i].volumeUSD / zaps[i].numTransactions
+        }
+        else if (zaps[i].name === 'DAI Unipool'){
+            zaps[i].numTransactions += zaps[i + 1].numTransactions
+            zaps[i].volumeETH += zaps[i + 1].volumeETH
+            zaps[i].volumeUSD += zaps[i + 1].volumeUSD
+            zaps[i].avgVolumeETH = zaps[i].volumeETH / zaps[i].numTransactions
+            zaps[i].avgVolumeUSD = zaps[i].volumeUSD / zaps[i].numTransactions
+        }
+        else if (zaps[i].name === 'MKR Unipool'){
             zaps[i].numTransactions += zaps[i + 1].numTransactions
             zaps[i].volumeETH += zaps[i + 1].volumeETH
             zaps[i].volumeUSD += zaps[i + 1].volumeUSD
