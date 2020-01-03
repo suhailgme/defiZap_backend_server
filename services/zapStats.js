@@ -24,25 +24,27 @@ const getZapStats = async () => {
         zaps = await getZapTransactions()
     console.log('Returning Zaps')
     return zaps
-
 }
 
-const queryZapTransactions = async () => {
+const getZapTransactions = async () => {
     const ethPrice = await etherScan.getEtherPrice()
-    const addresses = addressService.getAllAddresses()
-    let zaps = addresses.map(async (address) => {
-        let history = await limiter.schedule(() => etherScan.getHistory(address.address))
-        let volume = totalGas = gasPrice = numTransactions = 0
-        console.log(new Date().toLocaleString(), 'updating', address.name)
-        history.forEach(transaction => {
-            volume += +ethers.utils.formatEther(transaction.value)
-            gasPrice += +transaction.gasPrice.toString() / gwei
-            numTransactions++
-        })
-        numTransactions -= 2 //Stats do not count transactions that deploy and transfer ownership
+    const zapAddresses = addressService.getAllAddresses()
+    let zaps = zapAddresses.map(async (zap) => {
+        let volume = totalGas = gasPrice = 0
+        let numTransactions = 0
+        await Promise.all(zap.address.map(async (address, index) => { 
+            let history = await limiter.schedule(() => etherScan.getHistory(address)) 
+            console.log(new Date().toLocaleString(), 'updating', zap.name, zap.address.length > 1 ? index + 1 : '')
+            history.forEach(transaction => {
+                volume += +ethers.utils.formatEther(transaction.value)
+                gasPrice += +transaction.gasPrice.toString() / gwei
+                numTransactions++
+            })
+        }))
+        numTransactions -= zap.address.length * 2 //Stats do not count transactions that deploy and transfer ownership (2 per address)
         return {
-            name: address.name,
-            address: address.address,
+            name: zap.name,
+            address: zap.address,
             numTransactions,
             volumeETH: volume,
             avgVolumeETH: volume / numTransactions,
@@ -54,62 +56,6 @@ const queryZapTransactions = async () => {
         }
     })
     return Promise.all(zaps)
-};
-
-const getZapTransactions = async () => {
-    let zaps = await queryZapTransactions()
-    for (let i = 0; i < zaps.length; i++) {
-        if (zaps[i].name === 'Lender') {
-            zaps[i].numTransactions += zaps[i + 1].numTransactions
-            zaps[i].volumeETH += zaps[i + 1].volumeETH
-            zaps[i].volumeUSD += zaps[i + 1].volumeUSD
-            zaps[i].avgVolumeETH = zaps[i].volumeETH / zaps[i].numTransactions
-            zaps[i].avgVolumeUSD = zaps[i].volumeUSD / zaps[i].numTransactions
-        }
-        else if (zaps[i].name === 'ETH Bull') {
-            zaps[i].numTransactions += zaps[i + 1].numTransactions
-            zaps[i].volumeETH += zaps[i + 1].volumeETH
-            zaps[i].volumeUSD += zaps[i + 1].volumeUSD
-            zaps[i].avgVolumeETH = zaps[i].volumeETH / zaps[i].numTransactions
-            zaps[i].avgVolumeUSD = zaps[i].volumeUSD / zaps[i].numTransactions
-        }
-        else if (zaps[i].name === 'Moderate Bull') {
-            zaps[i].numTransactions += zaps[i + 1].numTransactions
-            zaps[i].volumeETH += zaps[i + 1].volumeETH
-            zaps[i].volumeUSD += zaps[i + 1].volumeUSD
-            zaps[i].avgVolumeETH = zaps[i].volumeETH / zaps[i].numTransactions
-            zaps[i].avgVolumeUSD = zaps[i].volumeUSD / zaps[i].numTransactions
-        }
-        else if (zaps[i].name === 'Double Bull') {
-            zaps[i].numTransactions += zaps[i + 1].numTransactions
-            zaps[i].volumeETH += zaps[i + 1].volumeETH
-            zaps[i].volumeUSD += zaps[i + 1].volumeUSD
-            zaps[i].avgVolumeETH = zaps[i].volumeETH / zaps[i].numTransactions
-            zaps[i].avgVolumeUSD = zaps[i].volumeUSD / zaps[i].numTransactions
-        }
-        else if (zaps[i].name === 'Super Saver') {
-            zaps[i].numTransactions += zaps[i + 1].numTransactions
-            zaps[i].volumeETH += zaps[i + 1].volumeETH
-            zaps[i].volumeUSD += zaps[i + 1].volumeUSD
-            zaps[i].avgVolumeETH = zaps[i].volumeETH / zaps[i].numTransactions
-            zaps[i].avgVolumeUSD = zaps[i].volumeUSD / zaps[i].numTransactions
-        }
-        else if (zaps[i].name === 'DAI Unipool') {
-            zaps[i].numTransactions += zaps[i + 1].numTransactions
-            zaps[i].volumeETH += zaps[i + 1].volumeETH
-            zaps[i].volumeUSD += zaps[i + 1].volumeUSD
-            zaps[i].avgVolumeETH = zaps[i].volumeETH / zaps[i].numTransactions
-            zaps[i].avgVolumeUSD = zaps[i].volumeUSD / zaps[i].numTransactions
-        }
-        else if (zaps[i].name === 'MKR Unipool') {
-            zaps[i].numTransactions += zaps[i + 1].numTransactions
-            zaps[i].volumeETH += zaps[i + 1].volumeETH
-            zaps[i].volumeUSD += zaps[i + 1].volumeUSD
-            zaps[i].avgVolumeETH = zaps[i].volumeETH / zaps[i].numTransactions
-            zaps[i].avgVolumeUSD = zaps[i].volumeUSD / zaps[i].numTransactions
-        }
-    }
-    return zaps
 };
 
 (async () => {
