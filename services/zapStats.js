@@ -1,7 +1,7 @@
 const ethers = require('ethers');
 const Cron = require('cron').CronJob
 const Bottleneck = require('bottleneck')
-const addresses = require('../constants/addresses')
+const addressService = require('./addressService')
 
 const limiter = new Bottleneck({
     minTime: 555,
@@ -14,35 +14,37 @@ const etherScan = new ethers.providers.EtherscanProvider()
 let zaps = []
 
 const job = new Cron('*/15 * * * *', async () => {
-    zaps = await computeZapStats()
+    zaps = await getZapTransactions()
 })
 
 job.start()
 
 const getZapStats = async () => {
     if (zaps.length === 0)
-        zaps = await computeZapStats()
+        zaps = await getZapTransactions()
     console.log('Returning Zaps')
     return zaps
-
 }
 
-const computeZapStats = async () => {
-    let zaps = []
+const getZapTransactions = async () => {
     const ethPrice = await etherScan.getEtherPrice()
-    for (const [zap, address] of Object.entries(addresses)) {
-        let volume = totalGas = gasPrice = numTransactions = 0
-        let history = await limiter.schedule(() => etherScan.getHistory(address))
-        console.log(new Date().toLocaleString(), 'updating', zap)
-        history.forEach(transaction => {
-            volume += +ethers.utils.formatEther(transaction.value)
-            gasPrice += +transaction.gasPrice.toString() / gwei
-            numTransactions++
-        })
-        numTransactions -= 2 //Stats do not count transactions that deploy and transfer ownership
-        zaps.push({
-            name: zap,
-            address: addresses[zap],
+    const zapAddresses = addressService.getAllAddresses()
+    let zaps = zapAddresses.map(async (zap) => {
+        let volume = totalGas = gasPrice = 0
+        let numTransactions = 0
+        await Promise.all(zap.address.map(async (address, index) => { 
+            let history = await limiter.schedule(() => etherScan.getHistory(address)) 
+            console.log(new Date().toLocaleString(), 'updating', zap.name, zap.address.length > 1 ? index + 1 : '')
+            history.forEach(transaction => {
+                volume += +ethers.utils.formatEther(transaction.value)
+                gasPrice += +transaction.gasPrice.toString() / gwei
+                numTransactions++
+            })
+        }))
+        numTransactions -= zap.address.length * 2 //Stats do not count transactions that deploy and transfer ownership (2 per address)
+        return {
+            name: zap.name,
+            address: zap.address,
             numTransactions,
             volumeETH: volume,
             avgVolumeETH: volume / numTransactions,
@@ -51,64 +53,13 @@ const computeZapStats = async () => {
             avgGasPrice: gasPrice / numTransactions,
             updated: new Date().toGMTString(),
             ethPrice
-        })
-    }
-    for (let i = 0; i < zaps.length; i++) {
-        if (zaps[i].name === 'Lender') {
-            zaps[i].numTransactions += zaps[i + 1].numTransactions
-            zaps[i].volumeETH += zaps[i + 1].volumeETH
-            zaps[i].volumeUSD += zaps[i + 1].volumeUSD
-            zaps[i].avgVolumeETH = zaps[i].volumeETH / zaps[i].numTransactions
-            zaps[i].avgVolumeUSD = zaps[i].volumeUSD / zaps[i].numTransactions
         }
-        else if (zaps[i].name === 'ETH Bull') {
-            zaps[i].numTransactions += zaps[i + 1].numTransactions
-            zaps[i].volumeETH += zaps[i + 1].volumeETH
-            zaps[i].volumeUSD += zaps[i + 1].volumeUSD
-            zaps[i].avgVolumeETH = zaps[i].volumeETH / zaps[i].numTransactions
-            zaps[i].avgVolumeUSD = zaps[i].volumeUSD / zaps[i].numTransactions
-        }
-        else if (zaps[i].name === 'Moderate Bull') {
-            zaps[i].numTransactions += zaps[i + 1].numTransactions
-            zaps[i].volumeETH += zaps[i + 1].volumeETH
-            zaps[i].volumeUSD += zaps[i + 1].volumeUSD
-            zaps[i].avgVolumeETH = zaps[i].volumeETH / zaps[i].numTransactions
-            zaps[i].avgVolumeUSD = zaps[i].volumeUSD / zaps[i].numTransactions
-        }
-        else if (zaps[i].name === 'Double Bull') {
-            zaps[i].numTransactions += zaps[i + 1].numTransactions
-            zaps[i].volumeETH += zaps[i + 1].volumeETH
-            zaps[i].volumeUSD += zaps[i + 1].volumeUSD
-            zaps[i].avgVolumeETH = zaps[i].volumeETH / zaps[i].numTransactions
-            zaps[i].avgVolumeUSD = zaps[i].volumeUSD / zaps[i].numTransactions
-        }
-        else if (zaps[i].name === 'Super Saver') {
-            zaps[i].numTransactions += zaps[i + 1].numTransactions
-            zaps[i].volumeETH += zaps[i + 1].volumeETH
-            zaps[i].volumeUSD += zaps[i + 1].volumeUSD
-            zaps[i].avgVolumeETH = zaps[i].volumeETH / zaps[i].numTransactions
-            zaps[i].avgVolumeUSD = zaps[i].volumeUSD / zaps[i].numTransactions
-        }
-        else if (zaps[i].name === 'DAI Unipool'){
-            zaps[i].numTransactions += zaps[i + 1].numTransactions
-            zaps[i].volumeETH += zaps[i + 1].volumeETH
-            zaps[i].volumeUSD += zaps[i + 1].volumeUSD
-            zaps[i].avgVolumeETH = zaps[i].volumeETH / zaps[i].numTransactions
-            zaps[i].avgVolumeUSD = zaps[i].volumeUSD / zaps[i].numTransactions
-        }
-        else if (zaps[i].name === 'MKR Unipool'){
-            zaps[i].numTransactions += zaps[i + 1].numTransactions
-            zaps[i].volumeETH += zaps[i + 1].volumeETH
-            zaps[i].volumeUSD += zaps[i + 1].volumeUSD
-            zaps[i].avgVolumeETH = zaps[i].volumeETH / zaps[i].numTransactions
-            zaps[i].avgVolumeUSD = zaps[i].volumeUSD / zaps[i].numTransactions
-        }
-    }
-    return (zaps)
+    })
+    return Promise.all(zaps)
 };
 
 (async () => {
-    zaps = await computeZapStats()
+    zaps = await getZapTransactions()
 })()
 
 module.exports = getZapStats
