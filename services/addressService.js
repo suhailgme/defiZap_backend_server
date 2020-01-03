@@ -45,6 +45,11 @@ const unipoolAddresses = [
     address: ['0x52fc6455F258760705e70F70160b06619BFe0ADb'],
     interactionsSaved: 5
   },
+  {
+    name: 'DAI LLP',
+    address: ['0x44C49cB0d5751557cdaa5B8731AB59300808427b'],
+    interactionsSaved: 5
+  }
 ]
 
 const classicAddresses = [
