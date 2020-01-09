@@ -46,6 +46,11 @@ const unipoolAddresses = [
     interactionsSaved: 5
   },
   {
+    name: 'LINK Unipool',
+    address: ['0x8e8b9CF6d411b6c8Dacc63c306f2691ED195D91d'],
+    interactionsSaved: 5
+  },
+  {
     name: 'DAI Leveraged Liquidity Pool',
     address: ['0x8dfcB49766c0296E4373A0300b52C3637614Db59'],
     interactionsSaved: 5
