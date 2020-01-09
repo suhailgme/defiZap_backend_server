@@ -54,6 +54,16 @@ const unipoolAddresses = [
     name: 'DAI Leveraged Liquidity Pool',
     address: ['0x8dfcB49766c0296E4373A0300b52C3637614Db59'],
     interactionsSaved: 5
+  },
+  {
+    name: 'LINK LLP (2xETH)',
+    address: ['0x20eF0c900F8E7EC3a1A89a761f0670Ae9E3dD709'],
+    interactionsSaved: 5
+  },
+  {
+    name: 'LINK LLP (2xLINK)',
+    address: ['0x408609F5aCaB253d41cB5Dfce913ff367937313B'],
+    interactionsSaved: 5
   }
 ]
 
