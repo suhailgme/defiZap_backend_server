@@ -51,7 +51,7 @@ const unipoolAddresses = [
     interactionsSaved: 5
   },
   {
-    name: 'DAI Leveraged Liquidity Pool',
+    name: 'DAI LLP',
     address: ['0x8dfcB49766c0296E4373A0300b52C3637614Db59'],
     interactionsSaved: 5
   },
