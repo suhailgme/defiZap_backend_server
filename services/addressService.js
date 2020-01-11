@@ -6,9 +6,15 @@ const proxy = '0x52fc6455f258760705e70f70160b06619bfe0adb'
 const unipoolAddresses = [
   {
     name: 'sETH Unipool',
-    address: ['0xd3eba712988df0f8a7e5073719a40ce4cbf60b33'],
+    address: ['0xd3eba712988df0f8a7e5073719a40ce4cbf60b33','0xFb86852EC41A6220eABe1bcb1E4B606e46eb2Dd9'],
     interactionsSaved: 3
   },
+  {
+    name: 'sETH PoolsFyi',
+    address: ['0xFb86852EC41A6220eABe1bcb1E4B606e46eb2Dd9'],
+    interactionsSaved: 3
+  },
+
   {
     name: 'DAI Unipool',
     address: ['0x929A10EfDA7099865dAD8286Aee8715078902d51','0x3da6738C2b388eBDf2feA79554f27DaA7F2d3178'],
