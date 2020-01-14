@@ -1,6 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
+const path = require('path')
 
 const routes = require('./routes/index')
 const zaps = require('./routes/zaps')
@@ -11,6 +12,7 @@ const port = process.env.PORT || "8000"
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
+app.use('/images', express.static(path.join(__dirname, 'public/assets')) )
 app.use(cors())
 
 app.use('/', routes)
