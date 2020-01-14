@@ -6,6 +6,8 @@ const path = require('path')
 const routes = require('./routes/index')
 const zaps = require('./routes/zaps')
 const aggregateZaps = require('./routes/aggregateZaps')
+const zapDetails = require('./routes/zapDetails')
+
 
 const app = express()
 const port = process.env.PORT || "8000"
@@ -18,6 +20,8 @@ app.use(cors())
 app.use('/', routes)
 app.use('/zaps', zaps)
 app.use('/aggregateZaps', aggregateZaps)
+app.use('/zapDetails', zapDetails)
+
 
 app.use((req,res,next) =>{
     let error = new Error('Not Found');
