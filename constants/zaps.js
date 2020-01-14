@@ -1,7 +1,8 @@
 const zaps = [
     {
         name: 'sETH Unipool',
-        address: 'sETHUnipool.DeFiZap.eth',
+        ensAddress: 'sETHUnipool.DeFiZap.eth',
+        address: '0xd3eba712988df0f8a7e5073719a40ce4cbf60b33',
         image: '/images/unipool_sETH_illustration.svg',
         gasLimitRequirement: '1500000',
         platformsUsed: ['Uniswap'],
@@ -13,7 +14,8 @@ const zaps = [
     },
     {
         name: 'DAI Unipool',
-        address: 'DAIUnipool.DeFiZap.eth',
+        ensAddress: 'DAIUnipool.DeFiZap.eth',
+        address: '0x929A10EfDA7099865dAD8286Aee8715078902d51',
         // image: '/images/unipool_dai_illustration.svg',
         gasLimitRequirement: '1500000',
         platformsUsed: ['Uniswap'],
@@ -25,7 +27,8 @@ const zaps = [
     },
     {
         name: 'SNX Unipool',
-        address: 'SNXUnipool.DeFiZap.eth',
+        ensAddress: 'SNXUnipool.DeFiZap.eth',
+        address: '0xe3385df5b47687405A02Fc24322DeDb7df381852',
         image: '/images/unipool_snx_illustration.svg',
         gasLimitRequirement: '1500000',
         platformsUsed: ['Uniswap'],
@@ -37,7 +40,8 @@ const zaps = [
     },
     {
         name: 'MKR Unipool',
-        address: 'MKRUnipool.DeFiZap.eth',
+        ensAddress: 'MKRUnipool.DeFiZap.eth',
+        address: '0x13240b97c40D7E306cEDf3adc9cB057CeC74c361',
         image: '/images/unipool_mkr_illustration.svg',
         gasLimitRequirement: '1500000',
         platformsUsed: ['Uniswap'],
@@ -50,7 +54,8 @@ const zaps = [
 
     {
         name: 'CHAI Unipool',
-        address: 'CHAIUnipool.DeFiZap.eth',
+        ensAddress: 'CHAIUnipool.DeFiZap.eth',
+        address: '0xd17cda470bd0237fae82ef254c84d06d0e4cc02f',
         image: '/images/unipool_chai_illustration.svg',
         gasLimitRequirement: '1500000',
         platformsUsed: ['Uniswap', 'Kyber', 'Maker'],
@@ -63,7 +68,8 @@ const zaps = [
     },
     {
         name: 'cDAI Unipool',
-        address: 'cDAIPool.DeFiZap.eth',
+        ensAddress: 'cDAIPool.DeFiZap.eth',
+        address: '0x52fc6455F258760705e70F70160b06619BFe0ADb',
         image: '/images/unipool_cdai_illustration.svg',
         gasLimitRequirement: '1500000',
         platformsUsed: ['Uniswap', 'Kyber', 'Compound'],
@@ -76,7 +82,8 @@ const zaps = [
     },
     {
         name: 'LINK Unipool',
-        address: 'LINKUnipool.DeFiZap.eth',
+        ensAddress: 'LINKUnipool.DeFiZap.eth',
+        address: '0x8e8b9CF6d411b6c8Dacc63c306f2691ED195D91d',
         image: '/images/unipool_link_illustration.svg',
         gasLimitRequirement: '1500000',
         platformsUsed: ['Uniswap'],
@@ -88,7 +95,8 @@ const zaps = [
     },
     {
         name: 'DAI LLP',
-        address: 'DaiLLP.DeFiZap.eth',
+        ensAddress: 'DaiLLP.DeFiZap.eth',
+        address: '0x8dfcB49766c0296E4373A0300b52C3637614Db59',
         image: '/images/llp_dai_illustration.svg',
         gasLimitRequirement: '5000000',
         platformsUsed: ['Uniswap', 'Kyber', 'Fulcrum'],
@@ -101,7 +109,8 @@ const zaps = [
     },
     {
         name: 'LINK LLP',
-        address: 'linkllp.defizap.eth',
+        ensAddress: 'linkllp.defizap.eth',
+        address: '0x20eF0c900F8E7EC3a1A89a761f0670Ae9E3dD709',
         image: '/images/llp_link_illustration.svg',
         gasLimitRequirement: '5000000',
         platformsUsed: ['Uniswap', 'Kyber', 'Fulcrum'],
@@ -114,7 +123,8 @@ const zaps = [
     },
     {
         name: '2x LINK LLP',
-        address: '2xLINKLLP.defizap.eth',
+        ensAddress: '2xLINKLLP.defizap.eth',
+        address: '0x408609F5aCaB253d41cB5Dfce913ff367937313B',
         image: '/images/llp_2x_link_illustration.svg',
         gasLimitRequirement: '5000000',
         platformsUsed: ['Uniswap', 'Kyber', 'Fulcrum'],
@@ -127,7 +137,8 @@ const zaps = [
     },
     {
         name: 'Lender',
-        address: 'Lender.DeFiZap.eth',
+        ensAddress: 'Lender.DeFiZap.eth',
+        address: '0xEbD5E23927891FBfDa10487cCC9A1a1a7b9a4210',
         gasLimitRequirement: '7000000',
         platformsUsed: ['Kyber', 'Fulcrum', 'Compound'],
         accessTo: ['Lending Rewards', 'Long ETH with 2X Leveragee'],
@@ -138,7 +149,8 @@ const zaps = [
     },
     {
         name: 'ETH Bull',
-        address: 'EthBull.DeFiZap.eth',
+        ensAddress: 'EthBull.DeFiZap.eth',
+        address: '0x04b35eF193e2357328aE79914569721a7fFd6146',
         gasLimitRequirement: '7000000',
         platformsUsed: ['Fulcrum'],
         accessTo: ['Lending  Short BTC', 'Long ETH with 2X Leveragee'],
@@ -149,7 +161,8 @@ const zaps = [
     },
     {
         name: 'Moderate Bull',
-        address: 'ModerateBull.DeFiZap.eth',
+        ensAddress: 'ModerateBull.DeFiZap.eth',
+        address: '0x3b122c376E472AE6ae7a4739bEBF7b68E045b285',
         gasLimitRequirement: '2000000',
         platformsUsed: ['Synthetix'],
         accessTo: ['Synthetic Assets'],
@@ -160,7 +173,9 @@ const zaps = [
     },
     {
         name: 'Double Bull',
-        address: 'DoubleBull.DeFiZap.eth',
+        ensAddress: 'DoubleBull.DeFiZap.eth',
+        address: '0x1eE8C303f5AB9b36Bc30b9345dEC7e9a748fa693',
+
         gasLimitRequirement: '7000000',
         platformsUsed: ['Fulcrum'],
         accessTo: ['Long BTC with 2X Leverage', 'Long ETH with 2X Leverage'],
@@ -168,7 +183,6 @@ const zaps = [
             '50% used to open ETH Long position with 2X leverage on Fulcrum (dLETH2x)',
             '50% used to open BTC Long position with 2X leverage on Fulcrum (dLWBTC2x)'
         ]
-
     },
 ]
 const getZaps = () => {
