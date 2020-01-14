@@ -5,17 +5,19 @@ const addressService = require('./addressService')
 
 const limiter = new Bottleneck({
     minTime: 555,
-    maxConcurrent: 1
 })
 
 const gwei = 1000000000;
 const etherScan = new ethers.providers.EtherscanProvider()
 
 let zaps = []
+let aggregateZapStats = {}
 
 const job = new Cron('*/15 * * * *', async () => {
     zaps = await getZapTransactions()
+    aggregateZapStats = await computeAggregateZapStats(zaps)
 })
+
 
 job.start()
 
@@ -26,15 +28,47 @@ const getZapStats = async () => {
     return zaps
 }
 
+const getAggregateZapStats = async () => {
+    if (zaps.length === 0)
+        zaps = await getZapTransactions()
+    console.log('Returning Aggregate Zap Stats')
+    return aggregateZapStats
+}
+
+const computeAggregateZapStats = async (zaps) => {
+    const ethPrice = await etherScan.getEtherPrice()
+    numTransactions = totalVolumeETH = totalVolumeUSD = avgVolumeETH = avgVolumeUSD = 0
+    console.log(new Date().toLocaleString(), 'Aggregating Zap Stats')
+    zaps.forEach(zap => {
+        if (!zap.aggregated) {
+            numTransactions += zap.numTransactions
+            totalVolumeETH += zap.volumeETH
+            totalVolumeUSD += zap.volumeUSD
+        }
+    })
+    avgVolumeETH = totalVolumeETH / numTransactions
+    avgVolumeUSD = totalVolumeUSD / numTransactions
+
+    return {
+        numTransactions, 
+        totalVolumeETH, 
+        avgVolumeETH,
+        totalVolumeUSD,
+        avgVolumeUSD,
+        updated: new Date().toGMTString(),
+        ethPrice
+    }
+}
+
 const getZapTransactions = async () => {
     const ethPrice = await etherScan.getEtherPrice()
     const zapAddresses = addressService.getAllAddresses()
     let zaps = zapAddresses.map(async (zap) => {
         let volume = totalGas = gasPrice = 0
         let numTransactions = 0
-        await Promise.all(zap.address.map(async (address, index) => { 
-            let history = await limiter.schedule(() => etherScan.getHistory(address)) 
-            console.log(new Date().toLocaleString(), 'updating', zap.name, zap.address.length > 1 ? index + 1 : '')
+        await Promise.all(zap.address.map(async (address, index) => {
+            let history = await limiter.schedule(() => etherScan.getHistory(address))
+            console.log(new Date().toLocaleString(), 'Updating', zap.name, zap.address.length > 1 ? index + 1 : '')
             history.forEach(transaction => {
                 volume += +ethers.utils.formatEther(transaction.value)
                 gasPrice += +transaction.gasPrice.toString() / gwei
@@ -58,9 +92,11 @@ const getZapTransactions = async () => {
     return Promise.all(zaps)
 };
 
+
 (async () => {
     zaps = await getZapTransactions()
+    aggregateZapStats = computeAggregateZapStats(zaps)
 })()
 
-module.exports = getZapStats
+module.exports = { getZapStats, getAggregateZapStats }
 
