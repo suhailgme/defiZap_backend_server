@@ -12,8 +12,7 @@ const unipoolAddresses = [
   {
     name: 'sETH PoolsFyi',
     address: ['0xFb86852EC41A6220eABe1bcb1E4B606e46eb2Dd9'],
-    interactionsSaved: 3,
-    aggregated: true
+    interactionsSaved: 3
   },
 
   {
@@ -24,8 +23,7 @@ const unipoolAddresses = [
   {
     name: 'DAI PoolsFyi',
     address: ['0x3da6738C2b388eBDf2feA79554f27DaA7F2d3178'],
-    interactionsSaved: 3,
-    aggregated: true
+    interactionsSaved: 3
   },
   {
     name: 'SNX Unipool',
@@ -41,8 +39,7 @@ const unipoolAddresses = [
   {
     name: 'MKR PoolsFyi',
     address: ['0x1Fdf2cDc2B369bF4ceCFe528a4DcA3F6a74D6782'],
-    interactionsSaved: 3,
-    aggregated: true
+    interactionsSaved: 3
   },
   {
     name: 'CHAI Unipool',
