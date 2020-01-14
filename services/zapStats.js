@@ -40,7 +40,7 @@ const computeAggregateZapStats = async (zaps) => {
     numTransactions = totalVolumeETH = totalVolumeUSD = avgVolumeETH = avgVolumeUSD = 0
     console.log(new Date().toLocaleString(), 'Aggregating Zap Stats')
     zaps.forEach(zap => {
-        if (!zap.aggregated) {
+        if (zap.aggregated) {
             numTransactions += zap.numTransactions
             totalVolumeETH += zap.volumeETH
             totalVolumeUSD += zap.volumeUSD
@@ -85,6 +85,7 @@ const getZapTransactions = async () => {
             volumeUSD: volume * ethPrice,
             avgVolumeUSD: (volume * ethPrice) / numTransactions,
             avgGasPrice: gasPrice / numTransactions,
+            aggregated: zap.aggregated,
             updated: new Date().toGMTString(),
             ethPrice
         }
