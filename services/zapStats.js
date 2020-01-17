@@ -37,13 +37,15 @@ const getAggregateZapStats = async () => {
 
 const computeAggregateZapStats = async (zaps) => {
     const ethPrice = await etherScan.getEtherPrice()
-    numTransactions = totalVolumeETH = totalVolumeUSD = avgVolumeETH = avgVolumeUSD = 0
+    numTransactions = totalVolumeETH = totalVolumeUSD = avgVolumeETH = avgVolumeUSD = totalTimeSaved = transactionsEliminated = 0
     console.log(new Date().toLocaleString(), 'Aggregating Zap Stats')
     zaps.forEach(zap => {
         if (zap.aggregated) {
             numTransactions += zap.numTransactions
             totalVolumeETH += zap.volumeETH
             totalVolumeUSD += zap.volumeUSD
+            totalTimeSaved += ((((zap.numTransactions * zap.interactionsSaved) * 75) *1.40) /60)/60
+            transactionsEliminated += zap.numTransactions * zap.interactionsSaved
         }
     })
     avgVolumeETH = totalVolumeETH / numTransactions
@@ -55,6 +57,8 @@ const computeAggregateZapStats = async (zaps) => {
         avgVolumeETH,
         totalVolumeUSD,
         avgVolumeUSD,
+        totalTimeSaved,
+        transactionsEliminated,
         updated: new Date().toGMTString(),
         ethPrice
     }
@@ -85,6 +89,7 @@ const getZapTransactions = async () => {
             volumeUSD: volume * ethPrice,
             avgVolumeUSD: (volume * ethPrice) / numTransactions,
             avgGasPrice: gasPrice / numTransactions,
+            interactionsSaved: zap.interactionsSaved,
             aggregated: zap.aggregated,
             updated: new Date().toGMTString(),
             ethPrice
