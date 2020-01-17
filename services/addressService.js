@@ -61,7 +61,7 @@ const unipoolAddresses = [
   {
     name: 'LINK Unipool',
     address: ['0x8e8b9CF6d411b6c8Dacc63c306f2691ED195D91d'],
-    interactionsSaved: 5,
+    interactionsSaved: 3,
     aggregated: true
   },
   {
