@@ -61,7 +61,7 @@ const unipoolAddresses = [
   {
     name: 'LINK Unipool',
     address: ['0x8e8b9CF6d411b6c8Dacc63c306f2691ED195D91d'],
-    interactionsSaved: 3,
+    interactionsSaved: 5,
     aggregated: true
   },
   {
@@ -79,6 +79,24 @@ const unipoolAddresses = [
   {
     name: '2x LINK LLP',
     address: ['0x408609F5aCaB253d41cB5Dfce913ff367937313B'],
+    interactionsSaved: 5,
+    aggregated: true
+  },
+  {
+    name: 'wBTC LLP',
+    address: ['0x21091c5EA13854AB0965090dc4fc20280f1a5730'],
+    interactionsSaved: 5,
+    aggregated: true
+  },
+  {
+    name: 'wBTC Unipool',
+    address: ['0x4EBee4Cf5ba7de81f222fEfA4e5d0C30c4968FfF'],
+    interactionsSaved: 5,
+    aggregated: true
+  },
+  {
+    name: '2x wBTC LLP',
+    address: ['0xE4B7B00a802834BeA733F06A0A24a869F2765df7'],
     interactionsSaved: 5,
     aggregated: true
   }
@@ -165,9 +183,3 @@ module.exports = {
   getProxy,
   getAllAddresses
 }
-
-
-
-
-
-
