@@ -65,7 +65,7 @@ const unipoolAddresses = [
     aggregated: true
   },
   {
-    name: 'DAI LLP',
+    name: 'DAI LLP: 100% ETH',
     address: ['0x8dfcB49766c0296E4373A0300b52C3637614Db59'],
     interactionsSaved: 5,
     aggregated: true
