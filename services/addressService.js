@@ -71,13 +71,13 @@ const unipoolAddresses = [
     aggregated: true
   },
   {
-    name: 'LINK LLP',
+    name: 'LINK LLP: 100% ETH',
     address: ['0x20eF0c900F8E7EC3a1A89a761f0670Ae9E3dD709'],
     interactionsSaved: 5,
     aggregated: true
   },
   {
-    name: '2x LINK LLP',
+    name: 'LINK LLP: 100% LINK',
     address: ['0x408609F5aCaB253d41cB5Dfce913ff367937313B'],
     interactionsSaved: 5,
     aggregated: true
