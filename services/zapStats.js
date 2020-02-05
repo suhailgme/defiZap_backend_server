@@ -1,6 +1,7 @@
 const ethers = require('ethers');
 const Cron = require('cron').CronJob
 const Bottleneck = require('bottleneck')
+const fetch = require('node-fetch')
 const addressService = require('./addressService')
 
 const limiter = new Bottleneck({
@@ -44,7 +45,7 @@ const computeAggregateZapStats = async (zaps) => {
             numTransactions += zap.numTransactions
             totalVolumeETH += zap.volumeETH
             totalVolumeUSD += zap.volumeUSD
-            totalTimeSaved += ((((zap.numTransactions * zap.interactionsSaved) * 75) *1.40) /60)/60
+            totalTimeSaved += ((((zap.numTransactions * zap.interactionsSaved) * 75) * 1.40) / 60) / 60
             transactionsEliminated += zap.numTransactions * zap.interactionsSaved
         }
     })
@@ -52,8 +53,8 @@ const computeAggregateZapStats = async (zaps) => {
     avgVolumeUSD = totalVolumeUSD / numTransactions
 
     return {
-        numTransactions, 
-        totalVolumeETH, 
+        numTransactions,
+        totalVolumeETH,
         avgVolumeETH,
         totalVolumeUSD,
         avgVolumeUSD,
@@ -71,12 +72,18 @@ const getZapTransactions = async () => {
         let volume = totalGas = gasPrice = 0
         let numTransactions = 0
         await Promise.all(zap.address.map(async (address, index) => {
-            let history = await limiter.schedule(() => etherScan.getHistory(address))
+            let history = await limiter.schedule(() => fetch(`https://api.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=null`))
+            history = await history.json()
+            history = history.result
+            // let history = await limiter.schedule(() => etherScan.getHistory(address))
             console.log(new Date().toLocaleString(), 'Updating', zap.name, zap.address.length > 1 ? index + 1 : '')
             history.forEach(transaction => {
-                volume += +ethers.utils.formatEther(transaction.value)
-                gasPrice += +transaction.gasPrice.toString() / gwei
-                numTransactions++
+                if (!(+transaction.isError)) {
+                    // console.log(transaction)
+                    volume += +ethers.utils.formatEther(transaction.value)
+                    gasPrice += +transaction.gasPrice.toString() / gwei
+                    numTransactions++
+                } 
             })
         }))
         numTransactions -= zap.address.length * 2 //Stats do not count transactions that deploy and transfer ownership (2 per address)
