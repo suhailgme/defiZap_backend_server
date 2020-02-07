@@ -1,6 +1,7 @@
 // Zaps whose volume should be aggregated among all contracts may have multiple addresses
 
 const UniSwap_AddLiquityV2_General = '0x606563f8DC27F316b77F22d14D9Cd025B4F70469'
+const UniSwapRemoveLiquityGeneral_v1 = '0x4316e3aD83ca2Cf0ea5e3b25e3DE2fA7F93cfE9c'
 const proxy = '0x52fc6455f258760705e70f70160b06619bfe0adb'
 
 const unipoolAddresses = [
@@ -166,12 +167,15 @@ const getClassicAddresses = () => classicAddresses
 
 const getUniswapGeneral = () => UniSwap_AddLiquityV2_General
 
+const getUniSwapRemoveGeneral = () => UniSwapRemoveLiquityGeneral_v1
+
 const getProxy = () => proxy
 
 const getAllAddresses = () => {
   let addresses = unipoolAddresses.concat(classicAddresses)
   addresses.push({ name: 'UniSwap_AddLiquityV2_General', address: [getUniswapGeneral()], interactionsSaved: null, aggregated:true })
   addresses.push({ name: 'proxy', address: [getProxy()], interactionsSaved: null, aggregated: false })
+  addresses.push({ name: 'UniSwapRemoveLiquityGeneral_v1', address: [getUniSwapRemoveGeneral()], interactionsSaved: null, aggregated: false })
   return addresses
 }
 
