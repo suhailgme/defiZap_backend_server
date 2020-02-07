@@ -19,5 +19,10 @@
   },
   "engines": {
     "node": "12.x"
+  },
+  "prettier":{
+    "semi": false,
+    "singleQuote": true,
+    "printWidth": 100
   }
 }
