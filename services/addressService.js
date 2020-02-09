@@ -173,7 +173,7 @@ const getProxy = () => proxy
 
 const getAllAddresses = () => {
   let addresses = unipoolAddresses.concat(classicAddresses)
-  addresses.push({ name: 'UniSwap_AddLiquityV2_General', address: [getUniswapGeneral()], interactionsSaved: null, aggregated:true })
+  addresses.push({ name: 'General Unipool', address: [getUniswapGeneral()], interactionsSaved: null, aggregated:true })
   addresses.push({ name: 'proxy', address: [getProxy()], interactionsSaved: null, aggregated: false })
   addresses.push({ name: 'UniSwapRemoveLiquityGeneral_v1', address: [getUniSwapRemoveGeneral()], interactionsSaved: null, aggregated: false })
   return addresses
