@@ -163,7 +163,7 @@ const getZapTransactions = async () => {
       zap.address.map(async (address, index) => {
         let history = await limiter.schedule(() =>
           fetch(
-            `https://api.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=null`
+            `https://api.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&sort=asc&apikey=VG81MKD27J447IXSHPHEYGZX3KKQVJA9MT`
           )
         )
         history = await history.json()
