@@ -213,7 +213,7 @@ getEthPrice = async () => {
   const {
     result: { ethusd }
   } = await res.json();
-  return ethusd;
+  return +ethusd
 };
 
 ;(async () => {
