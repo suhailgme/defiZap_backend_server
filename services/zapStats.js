@@ -9,7 +9,7 @@ const limiter = new Bottleneck({
 })
 
 const gwei = 1000000000
-const etherScan = new ethers.providers.EtherscanProvider()
+// const etherScan = new ethers.providers.EtherscanProvider()
 
 let zaps = []
 let aggregateZapStats = {}
@@ -35,7 +35,8 @@ const getAggregateZapStats = async () => {
 }
 
 const computeAggregateZapStats = async zaps => {
-  const ethPrice = await etherScan.getEtherPrice()
+  // const ethPrice = await etherScan.getEtherPrice()
+  const ethPrice = await getEthPrice()
   numTransactions = totalVolumeETH = totalVolumeUSD = avgVolumeETH = avgVolumeUSD = totalTimeSaved = transactionsEliminated = 0
   console.log(new Date().toLocaleString(), 'Aggregating Zap Stats')
   zaps.forEach(zap => {
@@ -154,7 +155,8 @@ const getZapUsers = () => {
 }
 
 const getZapTransactions = async () => {
-  const ethPrice = await etherScan.getEtherPrice()
+  // const ethPrice = await etherScan.getEtherPrice()
+  const ethPrice = await getEthPrice()
   const zapAddresses = addressService.getAllAddresses()
   let zaps = zapAddresses.map(async zap => {
     let volume = (totalGas = gasPrice = 0)
@@ -203,6 +205,16 @@ const getZapTransactions = async () => {
   })
   return Promise.all(zaps)
 }
+
+getEthPrice = async () => {
+  const res = await fetch(
+    'https://api.etherscan.io/api?module=stats&action=ethprice&apikey=VG81MKD27J447IXSHPHEYGZX3KKQVJA9MT'
+  );
+  const {
+    result: { ethusd }
+  } = await res.json();
+  return ethusd;
+};
 
 ;(async () => {
   zaps = await getZapTransactions()
