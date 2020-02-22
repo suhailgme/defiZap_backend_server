@@ -10,6 +10,7 @@ const zapDetails = require('./routes/zapDetails')
 const frontierZaps = require('./routes/frontierZaps')
 const zapAddresses = require('./routes/zapAddresses')
 const zapUsers = require('./routes/zapUsers')
+const allZapUsers = require('./routes/allZapUsers')
 const defiSnap = require('./routes/defiSnap')
 
 
@@ -30,6 +31,7 @@ app.use('/zapDetails', zapDetails)
 app.use('/frontierZaps', frontierZaps)
 app.use('/zapAddresses', zapAddresses)
 app.use('/zapUsers', zapUsers)
+app.use('/allZapUsers', allZapUsers)
 app.use('/defiSnap', defiSnap)
 
 
