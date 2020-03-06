@@ -184,5 +184,6 @@ module.exports = {
   getClassicAddresses,
   getUniswapGeneral,
   getProxy,
-  getAllAddresses
+  getAllAddresses,
+  getUniSwapRemoveGeneral
 }
