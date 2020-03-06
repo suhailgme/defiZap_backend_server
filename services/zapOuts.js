@@ -12,8 +12,10 @@ const numberWithCommas = number => {
 let zapOuts = {}
 const job = new Cron('*/15 * * * *', async () => {
   zapsOuts = await queryZapOuts()
-  for (token in zapsOuts.tokenVolumes)
-    zapsOuts.tokenVolumes[token] = +zapsOuts.tokenVolumes[token].toFixed(4)
+  // for (token in zapOuts.aggregateZapOuts.tokenVolumes)
+  //   zapOuts.aggregateZapOuts.tokenVolumes[token] = +zapOuts.aggregateZapOuts.tokenVolumes[
+  //     token
+  //   ].toFixed(4)
 })
 
 job.start()
@@ -53,9 +55,9 @@ const queryZapOuts = async () => {
     const liquidityTokensRedeemed = ethers.utils.formatEther(event.values.LiqRed)
     const ethReceived = ethers.utils.formatEther(event.values.ethRec)
     const tokensReceived = ethers.utils.formatUnits(event.values.tokenRec, decimals)
-    const tokenEthPrice = tokensReceived / ethReceived
-    const ethVolume = tokensReceived / tokenEthPrice + +ethReceived
-    const estEthFees = ethVolume * 0.01
+    const tokenEthPrice = (tokensReceived / ethReceived).toString()
+    const ethVolume = (tokensReceived / tokenEthPrice + +ethReceived).toString()
+    const estEthFees = (ethVolume * 0.01).toString()
 
     if (tokenVolumes.hasOwnProperty(symbol)) tokenVolumes[symbol] += +tokensReceived
     else tokenVolumes[symbol] = +tokensReceived
@@ -87,6 +89,7 @@ const queryZapOuts = async () => {
     }
   })
   aggregateZapOuts.tokenVolumes = tokenVolumes
+  aggregateZapOuts.updated = new Date().toGMTString()
   return {
     aggregateZapOuts: aggregateZapOuts,
     zapOuts: zapOuts
@@ -104,6 +107,10 @@ const queryZapOuts = async () => {
 
 ;(async () => {
   zapOuts = await queryZapOuts()
+  // for (token in zapOuts.aggregateZapOuts.tokenVolumes)
+  //   zapOuts.aggregateZapOuts.tokenVolumes[token] = +zapOuts.aggregateZapOuts.tokenVolumes[
+  //     token
+  //   ].toFixed(4)
 })()
 
 module.exports = getZapOuts = () => zapOuts
