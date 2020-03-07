@@ -5,6 +5,7 @@ const fetch = require('node-fetch')
 const addressService = require('./addressService')
 
 const limiter = new Bottleneck({
+  maxConcurrent: 2,
   minTime: 555
 })
 
