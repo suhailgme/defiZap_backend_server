@@ -11,11 +11,7 @@ const numberWithCommas = number => {
 
 let zapOuts = {}
 const job = new Cron('*/15 * * * *', async () => {
-  zapsOuts = await queryZapOuts()
-  // for (token in zapOuts.aggregateZapOuts.tokenVolumes)
-  //   zapOuts.aggregateZapOuts.tokenVolumes[token] = +zapOuts.aggregateZapOuts.tokenVolumes[
-  //     token
-  //   ].toFixed(4)
+  await queryZapOuts()
 })
 
 job.start()
@@ -45,7 +41,7 @@ const queryZapOuts = async () => {
   const interface = new ethers.utils.Interface(abi)
   const logs = await provider.getLogs({ address: UnipoolRemoveLiquidity, fromBlock: 0 })
 
-  let zapOuts = logs.map(log => {
+  let _zapOuts = logs.map(log => {
     const txHash = log.transactionHash
     const event = interface.parseLog(log)
     const { symbol, name, decimals } = tokens.find(
@@ -90,27 +86,21 @@ const queryZapOuts = async () => {
   })
   aggregateZapOuts.tokenVolumes = tokenVolumes
   aggregateZapOuts.updated = new Date().toGMTString()
-  return {
-    aggregateZapOuts: aggregateZapOuts,
-    zapOuts: zapOuts
-  }
+  zapOuts = {aggregateZapOuts, zapOuts: _zapOuts}
 
-  console.table({
-    'Total Zap Outs': +aggregateZapOuts.numZapOuts.toFixed(2),
-    'Total Zap Out Volume (ETH)': +aggregateZapOuts.totalEthVolume.toFixed(2),
-    'Total Est. Accrued Fees (ETH)': +aggregateZapOuts.totalEstAcrruedFees.toFixed(2),
-    'Total LP Token Volume (UNI-V1)': +aggregateZapOuts.totalLpTokenVolume.toFixed(2),
-    'Total Token Volume (Native):': '-------',
-    ...tokenVolumes
-  })
+
+  // console.table({
+  //   'Total Zap Outs': +aggregateZapOuts.numZapOuts.toFixed(2),
+  //   'Total Zap Out Volume (ETH)': +aggregateZapOuts.totalEthVolume.toFixed(2),
+  //   'Total Est. Accrued Fees (ETH)': +aggregateZapOuts.totalEstAcrruedFees.toFixed(2),
+  //   'Total LP Token Volume (UNI-V1)': +aggregateZapOuts.totalLpTokenVolume.toFixed(2),
+  //   'Total Token Volume (Native):': '-------',
+  //   ...tokenVolumes
+  // })
 }
 
 ;(async () => {
-  zapOuts = await queryZapOuts()
-  // for (token in zapOuts.aggregateZapOuts.tokenVolumes)
-  //   zapOuts.aggregateZapOuts.tokenVolumes[token] = +zapOuts.aggregateZapOuts.tokenVolumes[
-  //     token
-  //   ].toFixed(4)
+  await queryZapOuts()
 })()
 
 module.exports = getZapOuts = () => zapOuts
