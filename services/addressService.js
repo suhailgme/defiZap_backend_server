@@ -12,6 +12,12 @@ const unipoolAddresses = [
     aggregated: true
   },
   {
+    name: 'Unipool V2',
+    address: ['0x80c5e6908368cb9db503ba968d7ec5a565bfb389','0x343e3a490c9251dc0eaa81da146ba6abe6c78b2d'],
+    interactionsSaved: 3,
+    aggregated: true
+  },
+  {
     name: 'sETH PoolsFyi',
     address: ['0xFb86852EC41A6220eABe1bcb1E4B606e46eb2Dd9'],
     interactionsSaved: 3,
