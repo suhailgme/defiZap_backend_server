@@ -1,316 +1,353 @@
 const zaps = [
   {
-    name: 'sETH Unipool',
-    ensAddress: 'sETHUnipool.DeFiZap.eth',
-    address: '0xd3eba712988df0f8a7e5073719a40ce4cbf60b33',
-    uniswapAddress: '0xe9cf7887b93150d4f2da7dfc6d502b216438f244',
-    image: '/images/unipool_sETH_illustration.png',
-    gasLimitRequirement: '1500000',
-    platformsUsed: ['Uniswap'],
-    accessTo: ['Pooling Rewards', 'Staking Rewards'],
-    description: [
-      '50% converted to sETH',
-      '50% leftover input + acquired tokens are added to the sETH/ETH Liquidity pool on Uniswap. Receive minted liquidity tracking tokens back to your wallet.'
-    ],
-    exposures: [
-      { symbol: 'sETH', proportion: '50.2' },
-      { symbol: 'ETH', proportion: '49.8' }
-    ]
+    name: 'Zapper Swap',
+    address: '0x2346722DAa00ebbd0fc452C0E7aB7976bDAFeae8',
+    type: 'swap',
+    protocol: 'zapper',
+    isActive: true,
   },
   {
-    name: 'DAI Unipool',
-    ensAddress: 'DAIUnipool.DeFiZap.eth',
-    address: '0x929A10EfDA7099865dAD8286Aee8715078902d51',
-    uniswapAddress: '0x2a1530c4c41db0b0b2bb646cb5eb1a67b7158667',
-    image: '/images/unipool_dai_illustration.png',
-    gasLimitRequirement: '1500000',
-    platformsUsed: ['Uniswap'],
-    accessTo: ['Pooling Rewards'],
-    description: [
-      '50% converted to DAI',
-      '50% leftover input + acquired tokens are added to the DAI/ETH Liquidity pool on Uniswap. Receive minted liquidity tracking tokens back to your wallet.'
-    ],
-    exposures: [
-      { symbol: 'DAI', proportion: '50.2' },
-      { symbol: 'ETH', proportion: '49.8' }
-    ]
+    name: 'yVault Zap Ins and Outs',
+    address: '0x9c57618bfCDfaE4cE8e49226Ca22A7837DE64A2d',
+    type: 'deposit',
+    protocol: 'yearn',
+    isActive: true,
   },
   {
-    name: 'SNX Unipool',
-    ensAddress: 'SNXUnipool.DeFiZap.eth',
-    address: '0xe3385df5b47687405A02Fc24322DeDb7df381852',
-    uniswapAddress: '0x3958b4ec427f8fa24eb60f42821760e88d485f7f',
-    image: '/images/unipool_snx_illustration.png',
-    gasLimitRequirement: '1500000',
-    platformsUsed: ['Uniswap'],
-    accessTo: ['Pooling Rewards'],
-    description: [
-      '50% converted to SNX',
-      '50% leftover input + acquired tokens are added to the SNX/ETH Liquidity pool on Uniswap. Receive minted liquidity tracking tokens back to your wallet.'
-    ],
-    exposures: [
-      { symbol: 'SNX', proportion: '50.2' },
-      { symbol: 'ETH', proportion: '49.8' }
-    ]
+    name: 'Uniswap V2 Zap Ins',
+    address: '0x80c5e6908368cb9db503ba968d7ec5a565bfb389',
+    type: 'deposit',
+    protocol: 'uniswap',
+    isActive: true,
   },
   {
-    name: 'MKR Unipool',
-    ensAddress: 'MKRUnipool.DeFiZap.eth',
-    address: '0x13240b97c40D7E306cEDf3adc9cB057CeC74c361',
-    uniswapAddress: '0x2c4bd064b998838076fa341a83d007fc2fa50957',
-    image: '/images/unipool_mkr_illustration.png',
-    gasLimitRequirement: '1500000',
-    platformsUsed: ['Uniswap'],
-    accessTo: ['Pooling Rewards'],
-    description: [
-      '50% converted to MKR',
-      '50% leftover input + acquired tokens are added to the MKR/ETH Liquidity pool on Uniswap. Receive minted liquidity tracking tokens back to your wallet.'
-    ],
-    exposures: [
-      { symbol: 'MKR', proportion: '50.2' },
-      { symbol: 'ETH', proportion: '49.8' }
-    ]
+    name: 'Uniswap V2 Zap Outs',
+    address: '0x343E3a490c9251dC0eaA81Da146ba6ABe6C78b2d',
+    type: 'withdraw',
+    protocol: 'uniswap',
+    isActive: true,
   },
   {
-    name: 'CHAI Unipool',
-    ensAddress: 'CHAIUnipool.DeFiZap.eth',
-    address: '0xd17cda470bd0237fae82ef254c84d06d0e4cc02f',
-    uniswapAddress: '0x6c3942b383bc3d0efd3f36efa1cbe7c8e12c8a2b',
-    image: '/images/unipool_chai_illustration.png',
-    gasLimitRequirement: '1500000',
-    platformsUsed: ['Uniswap', 'Kyber', 'Maker'],
-    accessTo: ['Pooling Rewards', 'DSR Rewards'],
-    description: [
-      '50% of your ETH input is first converted to DAI on Kyber to avoid ETH->CHAI slippage',
-      'Converted DAI is then wrapped into CHAI. Learn more on chai.money',
-      'CHAI + other 50% ETH input are added to the ETH/CHAI Liquidity Pool on Uniswap. Receive minted liquidity tracking tokens back to your wallet.'
-    ],
-    exposures: [
-      { symbol: 'CHAI', proportion: '50.2' },
-      { symbol: 'ETH', proportion: '49.8' }
-    ]
+    name: 'Balancer Zap Ins',
+    address: '0xA3128cC400E2878571368ae0a83F588Eb838552b',
+    type: 'deposit',
+    protocol: 'balancer',
+    isActive: true,
+  },
+  {
+    name: 'Balancer Zap Outs',
+    address: '0x00d0f137b51692d0ac708bde7b367a373865cffe',
+    type: 'withdraw',
+    protocol: 'balancer',
+    isActive: true,
+  },
+  {
+    name: 'Curve Zap Ins',
+    address: '0x598089cf2a190dff39eB66E7B529f06Aad93931b',
+    type: 'deposit',
+    protocol: 'curve',
+    isActive: true,
+  },
+
+  {
+    name: 'Curve Zap Outs',
+    address: '0x4bf331aa2bfb0869315fb81a350d109f4839f81b',
+    type: 'withdraw',
+    protocol: 'curve',
+    isActive: true,
+  },
+  {
+    name: 'Uniswap V1 Zap Outs',
+    address: '0x5e6531d99e9099cb3936c048daf6ba0b3f79b9e2',
+    type: 'withdraw',
+    protocol: 'uniswap',
+    isActive: true,
+  },
+  {
+    name: 'UNI-V2<>Balancer Pipe',
+    address: '0xA3149708cb9D9BD31CB5c8F5c107D94395B7bA64',
+    type: 'piping',
+    isActive: true,
+  },
+  {
+    name: 'Curve Zap Ins',
+    address: '0x5A4972b19De19F6117E02aeB54e37E9e6cEe3187',
+    type: 'deposit',
+    protocol: 'curve',
+  },
+  {
+    name: 'Multi-Pool Zap Ins',
+    address: '0x7f1cd65679d73eb98fcebe8b61c13d3d68605717',
+    type: 'deposit',
+    protocol: 'uniswap',
+  },
+  {
+    name: 'UNI-V1<>UNI-V1 Pipe',
+    address: '0xaecCd58001D52B4b931FD6FD5bF87D4F911100B7',
+    type: 'piping',
+  },
+  {
+    name: 'UNI-V1<>UNI-V2 Pipe',
+    address: '0x6d313883c6db5ea58bdd5546f403f1fe27e92690',
+    type: 'piping',
+  },
+  {
+    name: 'UNI-V1<>Curve Pipe',
+    address: '0x66895417881B1d77Ca71bd9e5Ba1E729f3Aa44D3',
+    type: 'piping',
+  },
+  {
+    name: 'Curve<>Curve Pipe',
+    address: '0x83c32BF929F80e404ff30Ede7333271460b13cd9',
+    type: 'piping',
+  },
+  {
+    name: 'yEarn Vault Zap Ins/Outs',
+    address: '0x02e75fe4e8f8531421ee22f4560664685c3f07de',
+    type: 'deposit',
+    protocol: 'yearn',
+  },
+  {
+    name: 'UNI-V2<>Balancer Pipe',
+    address: '0xe29095721f1a49f4ae495b5b1204273c7b1a6a7d',
+    type: 'piping',
+  },
+  {
+    name: 'Curve Zap Ins',
+    address: '0xbb7678acd5494ca06d9738dcbd2bdf1c6d58672f',
+    type: 'deposit',
+    protocol: 'curve',
+  },
+  {
+    name: 'Balancer Zap Ins',
+    address: '0xa2acfaaaa01c4999385104787c1f24a9cf95b725',
+    type: 'deposit',
+    protocol: 'balancer',
+  },
+  {
+    name: 'yVault Zap Ins and Outs',
+    address: '0xf8c8d0c5547bd213b1dd281a4f61be9a9feed87b',
+    type: 'deposit',
+    protocol: 'yearn',
+  },
+  {
+    name: 'Curve Zap Ins',
+    address: '0x456974dF1042bA7A46FD49512A8778Ac3B840A21',
+    type: 'deposit',
+    protocol: 'curve',
+  },
+  {
+    name: 'yVault Zap Ins and Outs',
+    address: '0xcade5569bd2946db60f23624956d209ae903de4d',
+    type: 'deposit',
+    protocol: 'yearn',
+  },
+  {
+    name: 'Balancer Zap Outs',
+    address: '0x5CCb8c39bF68612C7997Cbc498ae55908D32d223',
+    type: 'withdraw',
+    protocol: 'balancer',
+  },
+  {
+    name: 'yVault Zap Ins',
+    address: '0x02e75fE4E8f8531421ee22f4560664685c3f07DE',
+    type: 'deposit',
+    protocol: 'yearn',
+  },
+  {
+    name: 'UNI-V2<>Balancer Pipe',
+    address: '0xdb052f108c7e2a691ed702f54508192169be9d3f',
+    type: 'piping',
+  },
+  {
+    name: 'Uniswap V2 Zap Ins',
+    address: '0x775ee938186fddc13bd7c89d24820e1b0758f91d',
+    type: 'deposit',
+    protocol: 'uniswap',
+  },
+  {
+    name: 'UNI-V2<>Balancer Pipe',
+    address: '0xF890d5C1e09307D662Ae1861c7aE36D3F905c689',
+    type: 'piping',
+  },
+  {
+    name: 'Uniswap V1 Zap Outs V1 (Deprecated)',
+    address: '0x2fba0b21a553f0f268293be7abb07a54fffd2b02',
+    type: 'withdraw',
+    protocol: 'uniswap',
+  },
+  {
+    name: 'yearn.finance (BUSD Zap in)',
+    address: '0xFdedC6e02108B4cb53BbeAC4E041Dec94334C29e',
+    type: 'deposit',
+    protocol: 'curve',
+  },
+  {
+    name: 'yearn.finance (yCurve Zap in)',
+    address: '0xb227ea4F19257B838d34d7d390E209A83e590D71',
+    type: 'deposit',
+    protocol: 'curve',
+  },
+  {
+    name: 'Balancer Zap Ins 2.0 (Deprecated)',
+    address: '0x03E86D24C462fa6aD88568053361186E4A5aF68e',
+    type: 'deposit',
+    protocol: 'balancer',
+  },
+  {
+    name: 'UNI-V2<>Balancer Pipe V1 (Deprecated)',
+    address: '0xF890d5C1e09307D662Ae1861c7aE36D3F905c689',
+    type: 'piping',
+  },
+  {
+    name: 'Curve Zap Ins 1.0',
+    address: '0x924Cc11Fd506fcE3dAB461AA71a6bb823669EcE3',
+    type: 'deposit',
+    protocol: 'curve',
+  },
+  {
+    name: 'Curve Zap Ins 1.1',
+    address: '0xadcd4fDe447c10DF243c01828a6298958E69A3f6',
+    type: 'deposit',
+    protocol: 'curve',
+  },
+  {
+    name: 'Uniswap V1 Zap Ins ETH [DEC-JAN]',
+    address: '0x606563f8DC27F316b77F22d14D9Cd025B4F70469',
+    type: 'deposit',
+    protocol: 'uniswap',
+  },
+  {
+    name: 'Uniswap V1 Zap Ins ETH',
+    address: '0x97402249515994Cc0D22092D3375033Ad0ea438A',
+    type: 'deposit',
+    protocol: 'uniswap',
+  },
+  {
+    name: 'Balancer Zap Outs OLD',
+    address: '0x35B9Ae15EEb12eA934942a36754192A9Bb219742',
+    type: 'withdraw',
+    protocol: 'balancer',
+  },
+  {
+    name: 'Balancer Zap Outs',
+    address: '0xf2a5d7d059a9ee3c7622218db491495517fd619b',
+    type: 'withdraw',
+    protocol: 'balancer',
+  },
+  {
+    name: 'Balancer Zap Ins beta',
+    address: '0x727412DB12fED07386235D1474257Dc15302CCE5',
+    type: 'deposit',
+    protocol: 'balancer',
+  },
+  {
+    name: 'Balancer Zap Ins OLD',
+    address: '0x85560d8Ee2e714E60645f887Dd4133ee0479B362',
+    type: 'deposit',
+    protocol: 'balancer',
+  },
+  {
+    name: 'Balancer Zap Ins live',
+    address: '0xe90d159ec0837d00cc824df7e937abfa1673f781',
+    type: 'deposit',
+    protocol: 'balancer',
+  },
+  {
+    name: 'Uniswap V2 Zap Ins 1.0',
+    address: '0xEEE503B78e96F24c47c9AD8c287990e51697A99c',
+    type: 'deposit',
+    protocol: 'uniswap',
+  },
+  {
+    name: 'Uniswap V2 Zap Ins 1.1',
+    address: '0x026BdaC2F308C0109A864138CCa1a623F7828F4a',
+    type: 'deposit',
+    protocol: 'uniswap',
+  },
+  {
+    name: 'Uniswap V1 Zap Ins ERC20s',
+    address: '0x4f026054b9c934d92cd2db344ea1ae193a22067d',
+    type: 'deposit',
+    protocol: 'uniswap',
   },
   {
     name: 'cDAI Unipool',
-    ensAddress: 'cDAIPool.DeFiZap.eth',
     address: '0x52fc6455F258760705e70F70160b06619BFe0ADb',
-    uniswapAddress: '0x34E89740adF97C3A9D3f63Cc2cE4a914382c230b',
-    image: '/images/unipool_cdai_illustration.png',
-    gasLimitRequirement: '1500000',
-    platformsUsed: ['Uniswap', 'Kyber', 'Compound'],
-    accessTo: ['Pooling Rewards', 'Lending Rewards'],
-    description: [
-      '50% of your ETH input is first converted to DAI on Kyber to avoid ETH<>cDAI slippage',
-      'Converted DAI is then supplied on Compound to mint cDAI',
-      'cDAI + other 50% ETH input are added to the ETH/cDAI Liquidity Pool on Uniswap. Receive minted liquidity tracking tokens back to your wallet.'
-    ],
-    exposures: [
-      { symbol: 'cDAI', proportion: '50.2' },
-      { symbol: 'ETH', proportion: '49.8' }
-    ]
+    type: 'deposit',
+    protocol: 'uniswap',
   },
   {
-    name: 'LINK Unipool',
-    ensAddress: 'LINKUnipool.DeFiZap.eth',
-    address: '0x8e8b9CF6d411b6c8Dacc63c306f2691ED195D91d',
-    uniswapAddress: '0xF173214C720f58E03e194085B1DB28B50aCDeeaD',
-    image: '/images/unipool_link_illustration.png',
-    gasLimitRequirement: '1500000',
-    platformsUsed: ['Uniswap'],
-    accessTo: ['Pooling Rewards'],
-    description: [
-      '50% converted to LINK',
-      '50% leftover input + acquired tokens are added to the LINK/ETH Liquidity pool on Uniswap. Receive minted liquidity tracking tokens back to your wallet.'
-    ],
-    exposures: [
-      { symbol: 'LINK', proportion: '50.2' },
-      { symbol: 'ETH', proportion: '49.8' }
-    ]
+    name: 'CHAI Unipool',
+    address: '0xd17CDa470BD0237fae82Ef254C84D06D0e4cc02F',
+    type: 'deposit',
+    protocol: 'uniswap',
   },
-  {
-    name: 'wBTC Unipool',
-    ensAddress: 'wBTCUnipool.DeFiZap.eth',
-    address: '0x4EBee4Cf5ba7de81f222fEfA4e5d0C30c4968FfF',
-    uniswapAddress: '0x4d2f5cfba55ae412221182d8475bc85799a5644b',
-    image: '/images/unipool_wbtc_illustration.png',
-    gasLimitRequirement: '500000',
-    platformsUsed: ['Uniswap'],
-    accessTo: ['Pooling Rewards'],
-    description: [
-      '50% converted to wBTC',
-      '50% leftover input + acquired tokens are added to the wBTC/ETH Liquidity pool on Uniswap. Receive minted liquidity tracking tokens back to your wallet.'
-    ],
-    exposures: [
-      { symbol: 'wBTC', proportion: '50.2' },
-      { symbol: 'ETH', proportion: '49.8' }
-    ]
-  },
-  {
-    name: 'DAI LLP: 100% ETH',
-    ensAddress: 'DaiLLP.DeFiZap.eth',
-    address: '0x8dfcB49766c0296E4373A0300b52C3637614Db59',
-    uniswapAddress: '0x2a1530c4c41db0b0b2bb646cb5eb1a67b7158667',
-    image: '/images/llp_dai_illustration.png',
-    gasLimitRequirement: '5000000',
-    platformsUsed: ['Uniswap', 'Kyber', 'Fulcrum'],
-    accessTo: ['Pooling Rewards', 'Long ETH with 2X Leverage'],
-    description: [
-      '34% used to open ETH Long position with 2X leverage on Fulcrum (dLETH2x)',
-      '33% converted to DAI',
-      '33% leftover input + acquired tokens are added to the DAI/ETH Liquidity pool on Uniswap. Receive minted liquidity tracking tokens back to your wallet.'
-    ],
-    exposures: [
-      { symbol: 'dLETH2x', proportion: '34.0' },
-      { symbol: 'DAI', proportion: '33.0' },
-      { symbol: 'ETH', proportion: '33.0' }
-    ]
-  },
-  {
-    name: 'LINK LLP: 100% ETH',
-    ensAddress: 'linkllp.defizap.eth',
-    address: '0x20eF0c900F8E7EC3a1A89a761f0670Ae9E3dD709',
-    uniswapAddress: '0xF173214C720f58E03e194085B1DB28B50aCDeeaD',
-    image: '/images/llp_link_illustration.png',
-    gasLimitRequirement: '5000000',
-    platformsUsed: ['Uniswap', 'Kyber', 'Fulcrum'],
-    accessTo: ['Pooling Rewards', 'Long ETH with 2X Leverage'],
-    description: [
-      '34% used to open ETH Long position with 2X leverage on Fulcrum (dLETH2x)',
-      '33% converted to LINK',
-      '33% leftover input + acquired tokens are added to the LINK/ETH Liquidity pool on Uniswap. Receive minted liquidity tracking tokens back to your wallet.'
-    ],
-    exposures: [
-      { symbol: 'dLETH2x', proportion: '34.0' },
-      { symbol: 'LINK', proportion: '33.0' },
-      { symbol: 'ETH', proportion: '33.0' }
-    ]
-  },
-  {
-    name: 'wBTC LLP: 100% ETH',
-    ensAddress: 'wBTCllp.defizap.eth',
-    address: '0x21091c5EA13854AB0965090dc4fc20280f1a5730',
-    uniswapAddress: '0x4d2f5cfba55ae412221182d8475bc85799a5644b',
-    image: '/images/llp_wbtc_illustration.png',
-    gasLimitRequirement: '5000000',
-    platformsUsed: ['Uniswap', 'Kyber', 'Fulcrum'],
-    accessTo: ['Pooling Rewards', 'Long ETH with 2X Leverage'],
-    description: [
-      '34% used to open ETH Long position with 2X leverage on Fulcrum (dLETH2x)',
-      '33% converted to wBTC',
-      '33% leftover input + acquired tokens are added to the wBTC/ETH Liquidity pool on Uniswap. Receive minted liquidity tracking tokens back to your wallet.'
-    ],
-    exposures: [
-      { symbol: 'dLETH2x', proportion: '34.0' },
-      { symbol: 'wBTC', proportion: '33.0' },
-      { symbol: 'ETH', proportion: '33.0' }
-    ]
-  },
-  {
-    name: '2x LINK LLP: 100% Link',
-    ensAddress: '2xLINKLLP.defizap.eth',
-    address: '0x408609F5aCaB253d41cB5Dfce913ff367937313B',
-    uniswapAddress: '0xF173214C720f58E03e194085B1DB28B50aCDeeaD',
-    image: '/images/llp_2x_link_illustration.png',
-    gasLimitRequirement: '5000000',
-    platformsUsed: ['Uniswap', 'Kyber', 'Fulcrum'],
-    accessTo: ['Pooling Rewards', 'Long LINK with 2X Leverage'],
-    description: [
-      '34% used to open LINK Long position with 2X leverage on Fulcrum (dLLINK2x)',
-      '33% converted to LINK',
-      '33% leftover input + acquired tokens are added to the LINK/ETH Liquidity pool on Uniswap. Receive minted liquidity tracking tokens back to your wallet.'
-    ],
-    exposures: [
-      { symbol: 'dLLINK2x', proportion: '34.0' },
-      { symbol: 'LINK', proportion: '33.0' },
-      { symbol: 'ETH', proportion: '33.0' }
-    ]
-  },
-  {
-    name: '2x wBTC LLP: 100% wBTC',
-    ensAddress: '2xwBTCLLP.defizap.eth',
-    address: '0xE4B7B00a802834BeA733F06A0A24a869F2765df7',
-    uniswapAddress: '0x4d2f5cfba55ae412221182d8475bc85799a5644b',
-    image: '/images/llp_2x_wbtc_illustration.png',
-    gasLimitRequirement: '5000000',
-    platformsUsed: ['Uniswap', 'Kyber', 'Fulcrum'],
-    accessTo: ['Pooling Rewards', 'Long LINK with 2X Leverage'],
-    description: [
-      '34% used to open wBTC Long position with 2X leverage on Fulcrum (dLWBTC2x)',
-      '33% converted to wBTC',
-      '33% leftover input + acquired tokens are added to the wBTC/ETH Liquidity pool on Uniswap. Receive minted liquidity tracking tokens back to your wallet.'
-    ],
-    exposures: [
-      { symbol: 'dLWBTC2x', proportion: '34.0' },
-      { symbol: 'wBTC', proportion: '33.0' },
-      { symbol: 'ETH', proportion: '33.0' }
-    ]
-  },
-  {
-    name: 'Lender',
-    ensAddress: 'Lender.DeFiZap.eth',
-    address: '0xEbD5E23927891FBfDa10487cCC9A1a1a7b9a4210',
-    gasLimitRequirement: '7000000',
-    platformsUsed: ['Kyber', 'Fulcrum', 'Compound'],
-    accessTo: ['Lending Rewards', 'Long ETH with 2X Leveragee'],
-    description: [
-      '90% auto-converted into DAI + supplied to Compound to mint cDAI',
-      '10% used to open ETH Long position with 2X leverage on Fulcrum (dLETH2x)'
-    ],
-    exposures: [
-      { symbol: 'cDAI', proportion: '90.0' },
-      { symbol: 'dLETH2x', proportion: '10.0' }
-    ]
-  },
-  {
-    name: 'ETH Bull',
-    ensAddress: 'EthBull.DeFiZap.eth',
-    address: '0x04b35eF193e2357328aE79914569721a7fFd6146',
-    gasLimitRequirement: '7000000',
-    platformsUsed: ['Fulcrum'],
-    accessTo: ['Lending  Short BTC', 'Long ETH with 2X Leveragee'],
-    description: [
-      '50% used to open ETH Long position with 2X leverage on Fulcrum (dLETH2x)',
-      '50% used to open BTC Short position on Fulcrum (dsWBTC2x)'
-    ],
-    exposures: [
-      { symbol: 'dLETH2x', proportion: '50.0' },
-      { symbol: 'dsWBTC2x', proportion: '50.0' }
-    ]
-  },
-  {
-    name: 'Moderate Bull',
-    ensAddress: 'ModerateBull.DeFiZap.eth',
-    address: '0x3b122c376E472AE6ae7a4739bEBF7b68E045b285',
-    gasLimitRequirement: '2000000',
-    platformsUsed: ['Synthetix'],
-    accessTo: ['Synthetic Assets'],
-    description: [
-      '50% used to acquire sBTC on Synthetix exchange.',
-      '50% used to acquire sETH on Synthetix exchange.'
-    ],
-    exposures: [
-      { symbol: 'sBTC', proportion: '50.0' },
-      { symbol: 'sETH', proportion: '50.0' }
-    ]
-  },
-  {
-    name: 'Double Bull',
-    ensAddress: 'DoubleBull.DeFiZap.eth',
-    address: '0x1eE8C303f5AB9b36Bc30b9345dEC7e9a748fa693',
 
-    gasLimitRequirement: '7000000',
-    platformsUsed: ['Fulcrum'],
-    accessTo: ['Long BTC with 2X Leverage', 'Long ETH with 2X Leverage'],
-    description: [
-      '50% used to open ETH Long position with 2X leverage on Fulcrum (dLETH2x)',
-      '50% used to open BTC Long position with 2X leverage on Fulcrum (dLWBTC2x)'
-    ],
-    exposures: [
-      { symbol: 'dLETH2x', proportion: '50.0' },
-      { symbol: 'dLWBTC2x', proportion: '50.0' }
-    ]
-  }
-]
+  {
+    name: 'Uniswap V1 Zap Outs [FEB-APR]',
+    address: '0x4316e3aD83ca2Cf0ea5e3b25e3DE2fA7F93cfE9c',
+    type: 'withdraw',
+    protocol: 'uniswap',
+  },
+  {
+    name: 'Uniswap V1 Zap Ins via 1inch',
+    address: '0x7155e10930c1B1E5AFae6781CC09BBd4150f6DDA',
+    type: 'deposit',
+    protocol: 'uniswap',
+  },
+  {
+    name: 'Uniswap V2 Zap Outs',
+    address: '0xcfA897e2C4e0A64eaA9CA41F607820a09134353a',
+    type: 'withdraw',
+    protocol: 'uniswap',
+  },
+
+  {
+    name: 'iearn Zap inV3',
+    address: '0x975f1BC238303593EfaB00D63cF0fC5F519a8DE0',
+    type: 'deposit',
+    protocol: 'curve',
+  },
+
+  {
+    name: 'iearn Zap out v3',
+    address: '0xed03415e5705c5AbBf8E94c491b715Df526cAD55',
+    type: 'withdraw',
+    protocol: 'curve',
+  },
+  {
+    name: 'iearn Zap out v4',
+    address: '0xF2fF83844ffBa41b4Ebbf31296f9bb638107364B',
+    type: 'withdraw',
+    protocol: 'curve',
+  },
+  {
+    name: 'iearn Zap out v2',
+    address: '0xDf09EFbEfC94d360e1D232Ad5b2d8Ed66c6A9642',
+    type: 'withdraw',
+    protocol: 'curve',
+  },
+  {
+    name: 'iearn Zap swap v3',
+    address: '0x2C3A2558E9B91e893E53bCe94DE3457a29f6B262',
+    type: 'withdraw',
+    protocol: 'curve',
+  },
+  {
+    name: 'iearn Zap swap v4',
+    address: '0x53f05A51cF87AC0AFFc67a52D8110fFe824580AD',
+    type: 'withdraw',
+    protocol: 'curve',
+  },
+
+  {
+    name: 'Argent Zap in',
+    address: '0x379b4609bdf93b3584cf7B64bC78199cf185f1cD',
+    type: 'deposit',
+    protocol: 'uniswap',
+  },
+];
 const getZaps = () => {
   return zaps
 }
